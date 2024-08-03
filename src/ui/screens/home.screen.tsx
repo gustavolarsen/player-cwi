@@ -11,8 +11,8 @@ const HomeScreen = () => {
       <FlatList
         data={data}
         renderItem={({ item }) => <CardComponent {...item} />}
-        keyExtractor={item => {
-          String(item.id);
+        keyExtractor={(item, index) => {
+          return item.id;
         }}
       />
     </View>
