@@ -1,11 +1,24 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
 
 import data from '../../mock/data';
 import CardComponent from '../components/card.component';
 
 const HomeScreen = () => {
-  return (
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    setTimeout(() => setIsLoading(false), 5000);
+  });
+
+  return isLoading ? (
+    <View style={styles.loader}>
+      <ActivityIndicator
+        color={'grey'}
+        size={'large'}
+      />
+    </View>
+  ) : (
     <View style={styles.container}>
       <Text style={styles.title}>Playlists</Text>
       <FlatList
@@ -14,6 +27,7 @@ const HomeScreen = () => {
         keyExtractor={(item, index) => {
           return item.id;
         }}
+        contentContainerStyle={{ paddingHorizontal: 20 }}
       />
     </View>
   );
@@ -27,11 +41,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     color: '#414141',
     marginTop: 20,
-    padding: 30,
+    paddingVertical: 20,
   },
 
   title: {
     fontWeight: 'bold',
     fontSize: 32,
+    marginStart: 20,
+  },
+
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
